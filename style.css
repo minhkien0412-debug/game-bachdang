@@ -1,0 +1,43 @@
+body {
+  text-align: center;
+  font-family: Arial;
+}
+
+#river {
+  width: 900px;
+  height: 450px;
+  margin: auto;
+  background: url("river.png") no-repeat center/cover;
+  position: relative;
+  overflow: hidden;
+}
+
+.boat {
+  width: 90px;
+  position: absolute;
+  top: 260px;
+  transition: left 0.8s, top 1s, opacity 1s;
+}
+
+.stake {
+  width: 60px;
+  position: absolute;
+  bottom: 30px;
+  transform: rotate(45deg);
+}
+
+.splash {
+  width: 80px;
+  position: absolute;
+  top: 280px;
+}
+
+#quiz {
+  margin-top: 10px;
+}
+
+#game, #endScreen {
+  display: none;
+}
+
+
