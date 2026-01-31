@@ -77,10 +77,11 @@ function showStakeHitBoat(){
 
  setTimeout(()=>{
   sinkSound.play();
-  boat.style.top="1200px";
+  boat.style.top="1200px"; // chìm xuống
+  boat.style.opacity="0";
   boats.shift();
   stake.style.display="none";
- },1000);
+ },800);
 }
 
 function moveBoatsSmall(){
