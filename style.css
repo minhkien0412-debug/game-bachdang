@@ -1,57 +1,53 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:Arial;
 }
 
-body {
-  text-align: center;
-  font-family: Arial;
-  background: black;
-}
-
-/* SÔNG PHỦ TOÀN MÀN HÌNH */
-#river {
-  width: 100vw;
-  height: 100vh;
-  background: url("river.png") no-repeat center center;
-  background-size: cover;   /* kéo ảnh full màn hình */
-  position: relative;
-  overflow: hidden;
+/* NỀN SÔNG FULL MÀN */
+#river{
+  width:100vw;
+  height:100vh;
+  background:url("river.png") no-repeat center center;
+  background-size:cover;
+  position:relative;
 }
 
 /* THUYỀN NẰM TRÊN MẶT NƯỚC */
-.boat {
-  position: absolute;
-  width: 100px;
-  bottom: 120px;   /* chỉnh để nằm đúng trên mặt nước */
-  transition: left 1s, top 1s, opacity 1s;
+.boat{
+  position:absolute;
+  width:100px;
+  bottom:140px;  /* chỉnh để nằm đúng mặt nước */
+  transition:left 1s, top 1s, opacity 1s;
 }
 
-/* CỌC GỖ NGHIÊNG 45 ĐỘ VỀ PHÍA THUYỀN */
-#stake {
-  position: absolute;
-  width: 80px;
-  bottom: 100px;
-  right: 300px;
-  transform: rotate(45deg);   /* nghiêng 45 độ */
-  display: none;
+/* CỌC NGHIÊNG 45 ĐỘ VỀ PHÍA THUYỀN */
+#stake{
+  position:absolute;
+  width:80px;
+  bottom:120px;
+  transform:rotate(45deg);
+  display:none;
 }
 
 /* KHUNG CÂU HỎI */
-#questionBox {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255,255,255,0.8);
-  padding: 15px;
-  border-radius: 10px;
+#questionBox{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(255,255,255,0.85);
+  padding:15px;
+  border-radius:10px;
+  width:80%;
+  text-align:center;
 }
 
-button {
-  padding: 10px 16px;
-  margin: 5px;
-  font-size: 16px;
+button{
+  padding:8px 14px;
+  margin:4px;
+  font-size:16px;
 }
