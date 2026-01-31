@@ -1,35 +1,35 @@
 body {
   text-align: center;
   font-family: Arial;
+  background: #cceeff;
 }
 
 #river {
-  width: 900px;
-  height: 450px;
-  margin: auto;
-  background: url("river.png") no-repeat center/cover;
   position: relative;
-  overflow: hidden;
+  width: 800px;
+  height: 300px;
+  margin: auto;
+  background: url("images/river.png");
+  background-size: cover;
 }
 
-.boat {
-  width: 90px;
+#boat {
   position: absolute;
-  top: 260px;
-  transition: left 0.8s, top 1s, opacity 1s;
+  top: 120px;
+  left: 0px;
+  width: 100px;
+  transition: 1s;
 }
 
-.stake {
-  width: 60px;
+#stake {
   position: absolute;
-  bottom: 30px;
-  transform: rotate(45deg);
-}
-
-#quiz {
-  margin-top: 10px;
-}
-
-#game, #endScreen {
+  top: 120px;
+  right: 100px;
+  width: 80px;
   display: none;
+}
+
+button {
+  margin: 5px;
+  padding: 10px 20px;
 }
