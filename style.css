@@ -8,21 +8,23 @@ html,body{
 }
 
 /* NỀN SÔNG FULL MÀN */
-#river{
-  width:100vw;
-  height:100vh;
-  background:url("river.png") no-repeat center center;
-  background-size:cover;
-  position:relative;
+#river {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("river.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
 }
+
 
 /* THUYỀN NẰM TRÊN MẶT NƯỚC */
 .boat{
   position:absolute;
-  width:100px;
+  width:120px;
 
   /* NẰM TRÊN MẶT NƯỚC */
-  bottom: 180px;   /* tăng/giảm số này để khớp đúng mép nước trong ảnh */
+  bottom: 220px;   /* tăng/giảm số này để khớp đúng mép nước trong ảnh */
 
   transition:left 1s, top 1s, opacity 1s;
 }
@@ -54,6 +56,7 @@ button{
   margin:4px;
   font-size:16px;
 }
+
 
 
 
