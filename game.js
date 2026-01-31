@@ -1,103 +1,65 @@
-let questions = [
-{
- q:"Ai lãnh đạo chiến thắng Bạch Đằng năm 938?",
- a:["Lý Thường Kiệt","Ngô Quyền","Trần Hưng Đạo","Lê Lợi"],
- c:1,
- e:"Ngô Quyền đã dùng chiến thuật cọc gỗ để đánh bại quân Nam Hán năm 938."
-},
-{
- q:"Vũ khí đặc biệt trên sông Bạch Đằng là gì?",
- a:["Súng","Cọc gỗ","Đá","Cung tên"],
- c:1,
- e:"Cọc gỗ nhọn được cắm dưới lòng sông để đâm thủng thuyền giặc."
-},
-{
- q:"Sông Bạch Đằng thuộc vùng nào?",
- a:["Miền Trung","Miền Bắc","Miền Nam","Tây Nguyên"],
- c:1,
- e:"Sông Bạch Đằng thuộc khu vực Quảng Ninh – Hải Phòng."
-},
-{
- q:"Chiến thắng Bạch Đằng 938 chấm dứt thời kỳ nào?",
- a:["Bắc thuộc","Phong kiến","Pháp thuộc","Chiến tranh"],
- c:0,
- e:"Chiến thắng này kết thúc hơn 1000 năm Bắc thuộc."
-},
-{
- q:"Quân xâm lược trong trận Bạch Đằng 938 là?",
- a:["Tống","Nam Hán","Nguyên","Minh"],
- c:1,
- e:"Quân Nam Hán đem quân xâm lược và bị đánh bại."
-},
-{
- q:"Chiến thắng Bạch Đằng mở ra thời kỳ gì?",
- a:["Độc lập","Chiến tranh","Nô lệ","Chia cắt"],
- c:0,
- e:"Chiến thắng mở ra thời kỳ độc lập lâu dài cho dân tộc."
-}
+let boats = [];
+let qIndex = 0;
+let waiting = false;
+let canNext = false;
+let delayTimer = null;
+
+const questions = [
+ {q:"Trận Bạch Đằng do ai chỉ huy?",a:["Ngô Quyền","Lý Thường Kiệt","Trần Hưng Đạo","Quang Trung"],c:0,e:"Ngô Quyền chỉ huy trận Bạch Đằng năm 938."},
+ {q:"Quân ta dùng vũ khí gì trên sông?",a:["Cọc gỗ","Tên lửa","Pháo","Bom"],c:0,e:"Quân ta dùng cọc gỗ đóng dưới lòng sông."},
+ {q:"Trận Bạch Đằng nổi tiếng nhất năm nào?",a:["938","1000","1427","1789"],c:0,e:"Năm 938 là trận Bạch Đằng nổi tiếng nhất."},
+ {q:"Ai là kẻ xâm lược?",a:["Nam Hán","Mông Cổ","Pháp","Mỹ"],c:0,e:"Quân Nam Hán xâm lược nước ta."},
+ {q:"Mục đích cọc gỗ là gì?",a:["Đâm thủng thuyền","Trang trí","Làm cầu","Làm nhà"],c:0,e:"Cọc gỗ để đâm thủng thuyền địch."},
+ {q:"Chiến thắng giúp nước ta?",a:["Độc lập","Bị đô hộ","Thua trận","Không đổi"],c:0,e:"Chiến thắng giúp nước ta giành độc lập."}
 ];
 
-let qIndex=0;
-let boats=[];
-let totalSpawned=0;
-let destroyed=0;
-let moveStep=80;
-let timeLeft=15;
-let timerInterval=null;
-let waiting=false;
-let canNext=false;
-
-function startGame(){
- document.getElementById("startScreen").style.display="none";
- document.getElementById("game").style.display="block";
- spawnBoats();
- showQuestion();
- startTimer();
-}
-
-function spawnBoats(){
- let river=document.getElementById("river");
- while(boats.length<5 && totalSpawned<6){
-   let boat=document.createElement("img");
-   boat.src="boat.png";
-   boat.className="boat";
-   boat.style.left=(50 + boats.length*140)+"px";
-   river.appendChild(boat);
-   boats.push(boat);
-   totalSpawned++;
+function initBoats(){
+ const area=document.getElementById("boats");
+ area.innerHTML="";
+ boats=[];
+ for(let i=0;i<5;i++){
+   let b=document.createElement("img");
+   b.src="boat.png";
+   b.className="boat";
+   b.style.left="50px";
+   b.style.top=(80+i*80)+"px";
+   area.appendChild(b);
+   boats.push(b);
  }
 }
 
 function showQuestion(){
- if(qIndex>=questions.length){
-   win();
-   return;
- }
- let q=questions[qIndex];
- document.getElementById("question").innerText=
-   q.q+"\nA."+q.a[0]+"  B."+q.a[1]+"  C."+q.a[2]+"  D."+q.a[3];
- document.getElementById("explain").innerText="";
- document.getElementById("nextBtn").style.display="none";
- resetTimer();
  waiting=false;
  canNext=false;
+ document.getElementById("nextBtn").style.display="none";
+ document.getElementById("explain").innerText="";
+ let q=questions[qIndex];
+ document.getElementById("q").innerText=q.q;
+ for(let i=0;i<4;i++){
+   document.getElementById("b"+i).innerText=q.a[i];
+ }
 }
 
 function answer(n){
  if(waiting) return;
  waiting=true;
- stopTimer();
+
+ // reset timer cũ
+ if(delayTimer){
+   clearTimeout(delayTimer);
+   delayTimer=null;
+ }
 
  let q=questions[qIndex];
 
  if(n===q.c){
    document.getElementById("correctSound").play();
    document.getElementById("explain").innerText="✔ "+q.e;
-   setTimeout(showStakeAndKill,30000);
+   delayTimer=setTimeout(showStakeAndKill,30000);
  } else {
    document.getElementById("wrongSound").play();
    document.getElementById("explain").innerText="❌ "+q.e;
-   setTimeout(moveBoats,30000);
+   delayTimer=setTimeout(moveBoatsSmallStep,30000);
  }
 
  setTimeout(()=>{
@@ -106,78 +68,58 @@ function answer(n){
  },30000);
 }
 
-function nextQuestion(){
- if(!canNext) return;
- qIndex++;
- showQuestion();
-}
-
 function showStakeAndKill(){
- if(boats.length===0) return;
- let river=document.getElementById("river");
- let boat=boats.shift();
-
- let stake=document.createElement("img");
- stake.src="stake.png";
- stake.className="stake";
- let bx=parseInt(boat.style.left);
- stake.style.left=(bx+20)+"px";
- river.appendChild(stake);
+ let stake=document.getElementById("stake");
+ stake.style.display="block";
+ stake.style.left="300px";
+ stake.style.top=boats[0].style.top;
 
  setTimeout(()=>{
-   boat.style.top="500px";
-   boat.style.opacity="0";
-   setTimeout(()=>{
-     boat.remove();
-     stake.remove();
-     destroyed++;
-     spawnBoats();
-     if(destroyed>=6) win();
-   },800);
- },400);
-}
-
-function moveBoats(){
- boats.forEach(b=>{
-   let x=parseInt(b.style.left);
-   let newX=x+moveStep;
-   b.style.left=newX+"px";
-   if(newX>=700) lose();
- });
-}
-
-function startTimer(){
- timeLeft=15;
- document.getElementById("timer").innerText="⏱ Thời gian: "+timeLeft;
- timerInterval=setInterval(()=>{
-   timeLeft--;
-   document.getElementById("timer").innerText="⏱ Thời gian: "+timeLeft;
-   if(timeLeft<=0){
-     stopTimer();
-     moveBoats();
-     canNext=true;
-     document.getElementById("nextBtn").style.display="inline-block";
+   if(boats.length>0){
+     boats[0].remove();
+     boats.shift();
    }
+   stake.style.display="none";
+   checkWin();
  },1000);
 }
 
-function resetTimer(){
- stopTimer();
- startTimer();
+function moveBoatsSmallStep(){
+ boats.forEach(b=>{
+   let x=parseInt(b.style.left);
+   let newX=x+40;
+   b.style.left=newX+"px";
+   if(newX>=750){
+     lose();
+   }
+ });
 }
 
-function stopTimer(){
- if(timerInterval) clearInterval(timerInterval);
+function nextQuestion(){
+ if(!canNext) return;
+ qIndex++;
+ if(qIndex>=questions.length){
+   win();
+   return;
+ }
+ showQuestion();
+}
+
+function checkWin(){
+ if(boats.length===0){
+   win();
+ }
 }
 
 function win(){
- document.getElementById("game").style.display="none";
- document.getElementById("endScreen").style.display="block";
- document.getElementById("endText").innerText="🎉 CHIẾN THẮNG BẠCH ĐẰNG!";
+ document.getElementById("screen").innerText="🎉 BẠN THẮNG 🎉";
 }
 
 function lose(){
- document.getElementById("game").style.display="none";
- document.getElementById("endScreen").style.display="block";
- document.getElementById("endText").innerText="💀 THUA! THUYỀN GIẶC ĐÃ TỚI BỜ!";
+ document.getElementById("screen").innerText="💀 BẠN THUA 💀";
 }
+
+window.onload=()=>{
+ initBoats();
+ showQuestion();
+};
