@@ -1,35 +1,35 @@
 body {
-  text-align: center;
+  text-align:center;
   font-family: Arial;
-  background: #cceeff;
+  background:#b3e5fc;
 }
 
 #river {
-  position: relative;
-  width: 800px;
-  height: 300px;
-  margin: auto;
-  background: url("images/river.png");
-  background-size: cover;
+  width:800px;
+  height:300px;
+  background:url("river.png");
+  background-size:cover;
+  margin:auto;
+  position:relative;
+  overflow:hidden;
 }
 
-#boat {
-  position: absolute;
-  top: 120px;
-  left: 0px;
-  width: 100px;
-  transition: 1s;
+.boat {
+  position:absolute;
+  width:80px;
+  transition:1s;
 }
 
 #stake {
-  position: absolute;
-  top: 120px;
-  right: 100px;
-  width: 80px;
-  display: none;
+  width:60px;
+  position:absolute;
+  bottom:0;
+  left:350px;
+  display:none;
 }
 
 button {
-  margin: 5px;
-  padding: 10px 20px;
+  padding:10px;
+  margin:5px;
+  font-size:16px;
 }
