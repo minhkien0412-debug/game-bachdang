@@ -26,12 +26,6 @@ body {
   transform: rotate(45deg);
 }
 
-.splash {
-  width: 80px;
-  position: absolute;
-  top: 280px;
-}
-
 #quiz {
   margin-top: 10px;
 }
@@ -39,5 +33,3 @@ body {
 #game, #endScreen {
   display: none;
 }
-
-
