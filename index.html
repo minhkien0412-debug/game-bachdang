@@ -1,40 +1,31 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Game Bạch Đằng</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Game Bạch Đằng</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div id="startScreen">
-  <h1>⚔️ Trận Bạch Đằng ⚔️</h1>
+  <h1>⚔️ Trận Bạch Đằng</h1>
   <button onclick="startGame()">Bắt đầu</button>
 </div>
 
-<div id="game">
-  <h2 id="timer">⏱ Thời gian: 15</h2>
+<div id="gameScreen" style="display:none;">
+  <div id="river">
+    <img id="boat" src="images/boat.png">
+    <img id="stake" src="images/stake.png">
+  </div>
 
-  <div id="river"></div>
-
-  <div id="quiz">
+  <div id="questionBox">
     <p id="question"></p>
-    <button onclick="answer(0)">A</button>
-    <button onclick="answer(1)">B</button>
-    <button onclick="answer(2)">C</button>
-    <button onclick="answer(3)">D</button>
+    <div id="answers"></div>
     <p id="explain"></p>
     <button id="nextBtn" onclick="nextQuestion()" style="display:none;">Câu tiếp theo</button>
+    <p id="timer">30</p>
   </div>
 </div>
-
-<div id="endScreen">
-  <h1 id="endText"></h1>
-  <button onclick="location.reload()">Chơi lại</button>
-</div>
-
-<audio id="correctSound" src="correct.wav"></audio>
-<audio id="wrongSound" src="wrong.wav"></audio>
 
 <script src="game.js"></script>
 </body>
