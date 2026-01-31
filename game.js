@@ -44,6 +44,8 @@ let destroyed=0;
 let moveStep=80;
 let timeLeft=15;
 let timerInterval=null;
+let waiting=false;
+let canNext=false;
 
 function startGame(){
  document.getElementById("startScreen").style.display="none";
@@ -55,7 +57,6 @@ function startGame(){
 
 function spawnBoats(){
  let river=document.getElementById("river");
-
  while(boats.length<5 && totalSpawned<6){
    let boat=document.createElement("img");
    boat.src="boat.png";
@@ -76,56 +77,59 @@ function showQuestion(){
  document.getElementById("question").innerText=
    q.q+"\nA."+q.a[0]+"  B."+q.a[1]+"  C."+q.a[2]+"  D."+q.a[3];
  document.getElementById("explain").innerText="";
+ document.getElementById("nextBtn").style.display="none";
  resetTimer();
+ waiting=false;
+ canNext=false;
 }
 
 function answer(n){
- let q=questions[qIndex];
+ if(waiting) return;
+ waiting=true;
  stopTimer();
+
+ let q=questions[qIndex];
 
  if(n===q.c){
    document.getElementById("correctSound").play();
    document.getElementById("explain").innerText="✔ "+q.e;
-   showStakeAndKill();
+   setTimeout(showStakeAndKill,30000);
  } else {
    document.getElementById("wrongSound").play();
    document.getElementById("explain").innerText="❌ "+q.e;
-   moveBoats();
+   setTimeout(moveBoats,30000);
  }
 
+ setTimeout(()=>{
+   canNext=true;
+   document.getElementById("nextBtn").style.display="inline-block";
+ },30000);
+}
+
+function nextQuestion(){
+ if(!canNext) return;
  qIndex++;
- setTimeout(showQuestion,1500);
+ showQuestion();
 }
 
 function showStakeAndKill(){
  if(boats.length===0) return;
-
  let river=document.getElementById("river");
  let boat=boats.shift();
 
  let stake=document.createElement("img");
  stake.src="stake.png";
  stake.className="stake";
-
  let bx=parseInt(boat.style.left);
  stake.style.left=(bx+20)+"px";
  river.appendChild(stake);
 
  setTimeout(()=>{
-   let splash=document.createElement("img");
-   splash.src="splash.png";
-   splash.className="splash";
-   splash.style.left=(bx+10)+"px";
-   river.appendChild(splash);
-
-   document.getElementById("splashSound").play();
    boat.style.top="500px";
    boat.style.opacity="0";
-
    setTimeout(()=>{
      boat.remove();
      stake.remove();
-     splash.remove();
      destroyed++;
      spawnBoats();
      if(destroyed>=6) win();
@@ -151,8 +155,8 @@ function startTimer(){
    if(timeLeft<=0){
      stopTimer();
      moveBoats();
-     qIndex++;
-     showQuestion();
+     canNext=true;
+     document.getElementById("nextBtn").style.display="inline-block";
    }
  },1000);
 }
@@ -177,4 +181,3 @@ function lose(){
  document.getElementById("endScreen").style.display="block";
  document.getElementById("endText").innerText="💀 THUA! THUYỀN GIẶC ĐÃ TỚI BỜ!";
 }
-
