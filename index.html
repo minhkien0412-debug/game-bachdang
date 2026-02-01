@@ -12,9 +12,16 @@
   <img id="stake" src="stake.png">
 </div>
 
+<!-- MÀN HÌNH START -->
+<div id="startScreen">
+  <h1>⚔️ Trận Bạch Đằng</h1>
+  <button onclick="startGame()">START</button>
+</div>
+
+<!-- GIAO DIỆN GAME -->
 <div id="game">
   <h2>⚔️ Trận Bạch Đằng</h2>
-  <div id="question">Nhấn START</div>
+  <div id="question"></div>
 
   <div id="answers">
     <button onclick="choose('A')"></button>
@@ -25,10 +32,9 @@
 
   <p id="explain"></p>
   <p>⏱ <span id="time">30</span>s</p>
-
-  <button onclick="startGame()">START</button>
 </div>
 
+<!-- MÀN HÌNH KẾT QUẢ -->
 <div id="result" class="hidden">
   <h1 id="resultText"></h1>
   <button onclick="startGame()">Chơi lại</button>
