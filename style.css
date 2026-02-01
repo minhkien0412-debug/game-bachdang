@@ -1,67 +1,74 @@
-body{
+body {
+  margin: 0;
   font-family: Arial;
-  text-align:center;
-  background:#cceeff;
+  text-align: center;
+  background: #cceeff;
 }
 
-#river{
-  position:relative;
-  width:800px;
-  height:300px;
-  margin:auto;
+.screen {
+  width: 100vw;
+  height: 100vh;
+  padding-top: 50px;
 }
 
-#bg{
-  width:100%;
-  height:100%;
+#gameArea {
+  position: relative;
+  width: 900px;
+  height: 400px;
+  margin: auto;
+  overflow: hidden;
+  border: 2px solid #333;
 }
 
-#boats{
-  position:absolute;
-  top:150px;
-  width:100%;
-  display:flex;
-  justify-content:space-around;
+#bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.boat{
-  width:80px;
-  transition: transform 1s ease, opacity 1s ease;
+#boatArea {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
-.sink{
-  transform: translateY(80px);
-  opacity:0;
+.boat {
+  position: absolute;
+  width: 80px;
+  transition: top 1s ease;
 }
 
-#stake{
-  position:absolute;
-  left:400px;
-  top:120px;
-  width:60px;
-  transform:rotate(45deg);
-  display:none;
+.sink {
+  animation: sink 2s forwards;
 }
 
-#answers button{
-  margin:5px;
-  padding:10px 20px;
+@keyframes sink {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100px); opacity: 0; }
 }
 
-.hidden{
-  display:none !important;
+#stake {
+  position: absolute;
+  width: 80px;
+  left: 400px;
+  top: 220px;
+  display: none;
+  transform: rotate(-45deg);
 }
 
-#result{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:#000a;
-  color:white;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+#answers button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+#timeBox {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+#explain {
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: bold;
 }
