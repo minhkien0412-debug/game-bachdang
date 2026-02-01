@@ -12,7 +12,7 @@ html,body{
   position:relative;
 }
 
-/* THUYỀN XẾP NGANG */
+/* THUYỀN */
 #boats{
   position:absolute;
   bottom:220px;
@@ -24,8 +24,15 @@ html,body{
 
 .boat{
   width:100px;
+  transition: transform 1s ease-in, opacity 1s ease-in;
 }
 
+.sink{
+  transform: translateY(80px);
+  opacity: 0;
+}
+
+/* CỌC */
 #stake{
   position:absolute;
   width:80px;
@@ -35,7 +42,7 @@ html,body{
   display:none;
 }
 
-/* START SCREEN */
+/* START */
 #startScreen{
   position:absolute;
   top:0;
