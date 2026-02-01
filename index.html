@@ -2,41 +2,50 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Game Bạch Đằng</title>
+  <title>Trận Bạch Đằng</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="startScreen">
-  <h1>⚔️ GAME BẠCH ĐẰNG ⚔️</h1>
-  <button onclick="startGame()">BẮT ĐẦU</button>
+<!-- MÀN HÌNH START -->
+<div id="startScreen" class="screen">
+  <h1>⚔ Trận Bạch Đằng</h1>
+  <button onclick="startGame()">START</button>
 </div>
 
-<div id="game" style="display:none;">
-  <div id="top">
-    ⏱ Thời gian: <span id="time">30</span>
-  </div>
+<!-- MÀN HÌNH GAME -->
+<div id="gameScreen" class="screen" style="display:none;">
+  <div id="timeBox">⏱ Thời gian: <span id="time">30</span></div>
 
-  <div id="river">
-    <img src="river.png" id="bg">
+  <div id="gameArea">
+    <img src="bg.jpg" id="bg">
+
+    <div id="boatArea"></div>
     <img src="stake.png" id="stake">
-    <div id="boats"></div>
   </div>
 
   <h2 id="question"></h2>
+
   <div id="answers">
-    <button onclick="choose('A')"></button>
-    <button onclick="choose('B')"></button>
-    <button onclick="choose('C')"></button>
-    <button onclick="choose('D')"></button>
+    <button id="btn0" onclick="choose(0)"></button>
+    <button id="btn1" onclick="choose(1)"></button>
+    <button id="btn2" onclick="choose(2)"></button>
+    <button id="btn3" onclick="choose(3)"></button>
   </div>
 
   <p id="explain"></p>
 </div>
 
-<div id="result" class="hidden">
-  <h1 id="resultText"></h1>
-  <button onclick="location.reload()">CHƠI LẠI</button>
+<!-- MÀN HÌNH THẮNG -->
+<div id="winScreen" class="screen" style="display:none;">
+  <h1>🎉 BẠN THẮNG!</h1>
+  <button onclick="restart()">Chơi lại</button>
+</div>
+
+<!-- MÀN HÌNH THUA -->
+<div id="loseScreen" class="screen" style="display:none;">
+  <h1>💀 BẠN THUA!</h1>
+  <button onclick="restart()">Chơi lại</button>
 </div>
 
 <script src="game.js"></script>
