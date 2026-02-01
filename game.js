@@ -50,16 +50,23 @@ const questions = [
 ];
 
 function startGame(){
-  document.getElementById("startScreen").style.display="none";
+  // Ẩn màn hình kết quả
   document.getElementById("result").classList.add("hidden");
+
+  // Ẩn start
+  document.getElementById("startScreen").style.display="none";
+
+  // Hiện game
   document.getElementById("game").style.display="block";
 
   current = 0;
   boatCount = 5;
+
   updateBoats();
   loadQuestion();
   startTimer();
 }
+
 
 function loadQuestion(){
   resetTimer();
@@ -190,3 +197,4 @@ async function explainByAI(question, answer){
   document.getElementById("explain").innerText =
     data.choices[0].message.content;
 }
+
