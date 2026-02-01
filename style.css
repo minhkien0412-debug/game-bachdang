@@ -1,61 +1,73 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
 }
 
-#river {
-  width: 100vw;
-  height: 100vh;
-  background-image: url("river.png");
-  background-size: cover;     /* QUAN TRỌNG */
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
-  overflow: hidden;
+#river{
+  width:100vw;
+  height:100vh;
+  background:url("background.png") no-repeat center;
+  background-size:cover;
+  position:relative;
 }
 
-
-
-/* THUYỀN NẰM TRÊN MẶT NƯỚC */
-.boat{
+/* THUYỀN XẾP NGANG */
+#boats{
   position:absolute;
-  width:120px;
-  bottom:220px;   /* đúng với ảnh bạn gửi */
-  transition: left 1s, top 1s, opacity 1s;
+  bottom:220px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:20px;
 }
 
+.boat{
+  width:100px;
+}
 
-/* CỌC GỖ NGHIÊNG 45 ĐỘ VỀ PHÍA THUYỀN */
 #stake{
   position:absolute;
   width:80px;
-  bottom:120px;
-  transform:rotate(45deg);
+  bottom:220px;
+  left:50%;
+  transform:translateX(-50%) rotate(45deg);
   display:none;
 }
 
-/* KHUNG CÂU HỎI */
-#questionBox{
+#game{
   position:absolute;
   bottom:10px;
   left:50%;
   transform:translateX(-50%);
-  background:rgba(255,255,255,0.85);
-  padding:15px;
-  border-radius:12px;
-  width:85%;
+  background:rgba(255,255,255,0.9);
+  padding:10px;
+  width:600px;
+  border-radius:10px;
   text-align:center;
 }
 
-button{
-  padding:8px 14px;
-  margin:4px;
-  font-size:16px;
+#answers button{
+  margin:5px;
+  padding:10px;
+  width:45%;
 }
 
+#result{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  font-size:40px;
+}
 
-
-
-
+.hidden{
+  display:none;
+}
