@@ -10,7 +10,7 @@ const soundWin = new Audio("win.wav");
 const soundLose = new Audio("lose.wav");
 
 // API KEY (nếu có mạng)
-const API_KEY = "PASTE_API_KEY_HERE";
+const API_KEY = "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";
 
 const questions = [
   {
@@ -147,3 +147,4 @@ function loseGame(){
   document.getElementById("resultText").innerText="💀 BẠN THUA!";
   document.getElementById("result").classList.remove("hidden");
 }
+
