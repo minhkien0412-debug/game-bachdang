@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Game Bạch Đằng</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Game Bạch Đằng</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="startScreen">
-  <h1>⚔️ Trận Bạch Đằng</h1>
-  <button onclick="startGame()">Bắt đầu</button>
+<div id="river">
+  <div id="boats"></div>
+  <img id="stake" src="stake.png">
 </div>
 
-<div id="gameScreen" style="display:none;">
-  <div id="river">
-    <div id="boats"></div>
-    <img id="stake" src="stake.png">
+<div id="game">
+  <h2>⚔️ Trận Bạch Đằng</h2>
+  <div id="question">Nhấn START</div>
+
+  <div id="answers">
+    <button onclick="choose('A')"></button>
+    <button onclick="choose('B')"></button>
+    <button onclick="choose('C')"></button>
+    <button onclick="choose('D')"></button>
   </div>
 
-  <div id="questionBox">
-    <h2 id="question"></h2>
-    <div id="answers">
-      <button onclick="answer(0)" id="b0"></button>
-      <button onclick="answer(1)" id="b1"></button>
-      <button onclick="answer(2)" id="b2"></button>
-      <button onclick="answer(3)" id="b3"></button>
-    </div>
-    <p id="explain"></p>
-    <button id="nextBtn" onclick="nextQuestion()">Câu tiếp theo</button>
-  </div>
+  <p id="explain"></p>
+  <p>⏱ <span id="time">30</span>s</p>
+
+  <button onclick="startGame()">START</button>
+</div>
+
+<div id="result" class="hidden">
+  <h1 id="resultText"></h1>
+  <button onclick="startGame()">Chơi lại</button>
 </div>
 
 <script src="game.js"></script>
