@@ -73,23 +73,40 @@ function loadQuestion(){
   btn[3].innerText="D. "+q.D;
   window.correct=q.answer;
   document.getElementById("explain").innerText="";
-}
-
-function choose(ans){
+}function choose(ans){
   resetTimer();
-  let q=questions[current];
+  let q = questions[current];
 
-  if(ans===window.correct){
+  if(ans === window.correct){
     soundCorrect.play();
     showStake();
     sinkBoat();
-    document.getElementById("explain").innerText=q.explain;
+    document.getElementById("explain").innerText = q.explain;
     boatCount--;
     updateBoats();
   }else{
     soundWrong.play();
-    document.getElementById("explain").innerText="❌ Sai rồi!";
+    document.getElementById("explain").innerText = "❌ Sai rồi!";
   }
+
+  setTimeout(()=>{
+    current++;
+
+    // ✅ THẮNG khi hết thuyền
+    if(boatCount <= 0){
+      winGame();
+      return;
+    }
+
+    // 👉 Nếu hết câu hỏi thì quay lại từ đầu (hoặc dừng ở câu cuối)
+    if(current >= questions.length){
+      current = 0; // quay vòng câu hỏi
+    }
+
+    loadQuestion();
+  },3000);
+}
+
 
   setTimeout(()=>{
     current++;
@@ -122,9 +139,11 @@ function startTimer(){
   timer=setInterval(()=>{
     time--;
     document.getElementById("time").innerText=time;
-    if(time<=0){
-      clearInterval(timer);
-      loseGame();
+  if(time <= 0){
+  clearInterval(timer);
+  loseGame();
+}
+
     }
   },1000);
 }
@@ -145,3 +164,4 @@ function loseGame(){
   document.getElementById("resultText").innerText="💀 BẠN THUA!";
   document.getElementById("result").classList.remove("hidden");
 }
+
