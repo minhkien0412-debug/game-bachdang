@@ -7,18 +7,18 @@
 </head>
 <body>
 
-<!-- MÀN HÌNH START -->
-<div id="startScreen" class="screen">
-  <h1>⚔ Trận Bạch Đằng</h1>
-  <button onclick="startGame()">START</button>
+<!-- START SCREEN -->
+<div id="startScreen" class="screen start">
+  <h1 class="title">TRẬN BẠCH ĐẰNG</h1>
+  <button class="bigBtn" onclick="startGame()">START</button>
 </div>
 
-<!-- MÀN HÌNH GAME -->
+<!-- GAME SCREEN -->
 <div id="gameScreen" class="screen" style="display:none;">
-  <div id="timeBox">⏱ Thời gian: <span id="time">30</span></div>
+  <div id="timeBox">⏱ <span id="time">30</span>s</div>
 
   <div id="gameArea">
-    <img src="bg.jpg" id="bg">
+    <img src="bg.png" id="bg">
 
     <div id="boatArea"></div>
     <img src="stake.png" id="stake">
@@ -27,25 +27,25 @@
   <h2 id="question"></h2>
 
   <div id="answers">
-    <button id="btn0" onclick="choose(0)"></button>
-    <button id="btn1" onclick="choose(1)"></button>
-    <button id="btn2" onclick="choose(2)"></button>
-    <button id="btn3" onclick="choose(3)"></button>
+    <button onclick="choose(0)" id="btn0"></button>
+    <button onclick="choose(1)" id="btn1"></button>
+    <button onclick="choose(2)" id="btn2"></button>
+    <button onclick="choose(3)" id="btn3"></button>
   </div>
 
   <p id="explain"></p>
 </div>
 
-<!-- MÀN HÌNH THẮNG -->
-<div id="winScreen" class="screen" style="display:none;">
+<!-- WIN -->
+<div id="winScreen" class="screen">
   <h1>🎉 BẠN THẮNG!</h1>
-  <button onclick="restart()">Chơi lại</button>
+  <button class="bigBtn" onclick="restart()">Chơi lại</button>
 </div>
 
-<!-- MÀN HÌNH THUA -->
-<div id="loseScreen" class="screen" style="display:none;">
+<!-- LOSE -->
+<div id="loseScreen" class="screen">
   <h1>💀 BẠN THUA!</h1>
-  <button onclick="restart()">Chơi lại</button>
+  <button class="bigBtn" onclick="restart()">Chơi lại</button>
 </div>
 
 <script src="game.js"></script>
