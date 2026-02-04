@@ -1,74 +1,104 @@
-body {
-  margin: 0;
-  font-family: Arial;
-  text-align: center;
-  background: #cceeff;
+body{
+  margin:0;
+  font-family:Arial;
+  text-align:center;
 }
 
-.screen {
-  width: 100vw;
-  height: 100vh;
-  padding-top: 50px;
+/* MÀN HÌNH CHUNG */
+.screen{
+  width:100vw;
+  height:100vh;
+  background:url("bg.png") no-repeat center center/cover;
 }
 
-#gameArea {
-  position: relative;
-  width: 900px;
-  height: 400px;
-  margin: auto;
-  overflow: hidden;
-  border: 2px solid #333;
+/* START */
+.start{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
-#bg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.title{
+  font-size:60px;
+  color:white;
+  text-shadow:2px 2px 5px black;
+  margin-bottom:30px;
 }
 
-#boatArea {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+.bigBtn{
+  font-size:28px;
+  padding:15px 40px;
 }
 
-.boat {
-  position: absolute;
-  width: 80px;
-  transition: top 1s ease;
+/* GAME */
+#timeBox{
+  font-size:20px;
+  color:white;
+  margin:10px;
+  text-shadow:1px 1px 3px black;
 }
 
-.sink {
+#gameArea{
+  position:relative;
+  width:100%;
+  height:50vh;
+  overflow:hidden;
+}
+
+#bg{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+#boatArea{
+  position:absolute;
+  width:100%;
+  height:100%;
+}
+
+.boat{
+  position:absolute;
+  width:80px;
+  bottom:120px; /* GIỮ THUYỀN TRÊN MẶT NƯỚC */
+  animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float{
+  0%{ transform:translateY(0); }
+  50%{ transform:translateY(5px); }
+  100%{ transform:translateY(0); }
+}
+
+.sink{
   animation: sink 2s forwards;
 }
 
-@keyframes sink {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(100px); opacity: 0; }
+@keyframes sink{
+  0%{ opacity:1; transform:translateY(0); }
+  100%{ opacity:0; transform:translateY(120px); }
 }
 
-#stake {
-  position: absolute;
-  width: 80px;
-  left: 400px;
-  top: 220px;
-  display: none;
-  transform: rotate(-45deg);
+#stake{
+  position:absolute;
+  width:80px;
+  left:45%;
+  bottom:100px;
+  display:none;
+  transform:rotate(-45deg);
 }
 
-#answers button {
-  margin: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
+#answers button{
+  margin:10px;
+  padding:10px 20px;
+  font-size:16px;
 }
 
-#timeBox {
-  font-size: 20px;
-  margin-bottom: 10px;
+#question{
+  margin-top:20px;
 }
 
-#explain {
-  margin-top: 15px;
-  font-size: 18px;
-  font-weight: bold;
+#explain{
+  font-weight:bold;
 }
