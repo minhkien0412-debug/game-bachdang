@@ -1,177 +1,131 @@
-const questions = [
-  {
-    q: "Trận Bạch Đằng năm 938 do ai chỉ huy?",
-    a: ["Ngô Quyền", "Trần Hưng Đạo", "Lý Thường Kiệt", "Quang Trung"],
-    correct: 0,
-    explain: "Ngô Quyền là người chỉ huy trận Bạch Đằng năm 938 đánh bại quân Nam Hán."
-  },
-  {
-    q: "Chiến thuật chính ở trận Bạch Đằng là gì?",
-    a: ["Đánh trực diện", "Dùng cọc gỗ dưới nước", "Phục kích trên núi", "Đánh ban đêm"],
-    correct: 1,
-    explain: "Quân ta cắm cọc gỗ dưới lòng sông, lợi dụng thủy triều để tiêu diệt thuyền địch."
-  },
-  {
-    q: "Con sông diễn ra trận Bạch Đằng thuộc tỉnh nào ngày nay?",
-    a: ["Quảng Ninh - Hải Phòng", "Huế", "Hà Nội", "Nghệ An"],
-    correct: 0,
-    explain: "Sông Bạch Đằng nằm giữa Quảng Ninh và Hải Phòng."
-  },
-  {
-    q: "Quân xâm lược bị đánh bại năm 938 là?",
-    a: ["Quân Tống", "Quân Mông Nguyên", "Quân Nam Hán", "Quân Minh"],
-    correct: 2,
-    explain: "Quân Nam Hán bị tiêu diệt hoàn toàn trên sông Bạch Đằng."
-  },
-  {
-    q: "Ý nghĩa lớn nhất của chiến thắng Bạch Đằng 938?",
-    a: ["Mở rộng lãnh thổ", "Kết thúc 1000 năm Bắc thuộc", "Giữ yên biên giới", "Phát triển thương mại"],
-    correct: 1,
-    explain: "Chiến thắng Bạch Đằng chấm dứt hơn 1000 năm Bắc thuộc."
-  },
-  {
-    q: "Ai là người hi sinh trong trận Bạch Đằng 938?",
-    a: ["Hoàng Thao", "Lưu Hoằng Tháo", "Triệu Tiết", "Thoát Hoan"],
-    correct: 1,
-    explain: "Lưu Hoằng Tháo – con vua Nam Hán – bị giết trong trận Bạch Đằng."
-  }
+let questions = [
+ {q:"Trận Bạch Đằng năm 938 do ai chỉ huy?",
+  a:["Ngô Quyền","Trần Hưng Đạo","Lý Thường Kiệt","Quang Trung"],
+  c:0, e:"Ngô Quyền lãnh đạo quân dân đánh bại quân Nam Hán."},
+
+ {q:"Chiến thuật chính ở Bạch Đằng là gì?",
+  a:["Cọc gỗ ngầm","Đánh bộ","Phòng thủ thành","Cung tên"],
+  c:0, e:"Cắm cọc gỗ nhọn dưới sông để phá thuyền giặc."},
+
+ {q:"Kẻ thù năm 938 là ai?",
+  a:["Nam Hán","Tống","Nguyên","Minh"],
+  c:0, e:"Quân Nam Hán xâm lược nước ta."},
+
+ {q:"Trận Bạch Đằng diễn ra ở đâu?",
+  a:["Sông Bạch Đằng","Sông Hồng","Sông Đà","Sông Cả"],
+  c:0, e:"Diễn ra trên sông Bạch Đằng."},
+
+ {q:"Ai là con trai Ngô Quyền?",
+  a:["Ngô Xương Ngập","Ngô Nhật Khánh","Đinh Bộ Lĩnh","Lê Hoàn"],
+  c:0, e:"Ngô Xương Ngập là con Ngô Quyền."},
+
+ {q:"Quân giặc đi bằng gì?",
+  a:["Thuyền","Ngựa","Xe","Bộ"],
+  c:0, e:"Quân Nam Hán đi bằng thuyền."}
 ];
 
-let current = 0;
-let time = 30;
-let timer;
-let boatCount = 5;
-
+// ===== ÂM THANH =====
 const soundCorrect = new Audio("correct.wav");
-const soundWrong = new Audio("wrong.wav");
-const soundSplash = new Audio("splash.wav");
+const soundWrong   = new Audio("wrong.wav");
+const soundSplash  = new Audio("splash.wav");
+const soundWin     = new Audio("win.wav");
+const soundLose    = new Audio("lose.wav");
+
+let index=0, boats=[], time=30, timer;
 
 function startGame(){
-  document.getElementById("startScreen").style.display = "none";
-  document.getElementById("gameScreen").style.display = "block";
-  loadQuestion();
-  startTimer();
-  createBoats();
+ document.getElementById("startScreen").style.display="none";
+ document.getElementById("gameScreen").style.display="block";
+ spawnBoats();
+ showQ();
+ startTimer();
 }
 
-function loadQuestion(){
-  let q = questions[current];
-  document.getElementById("question").innerText = q.q;
+function spawnBoats(){
+ let area=document.getElementById("boatArea");
+ area.innerHTML="";
+ boats=[];
+ for(let i=0;i<5;i++){
+  let b=document.createElement("img");
+  b.src="boat.png";
+  b.className="boat";
+  b.style.left=(150+i*150)+"px";
+  area.appendChild(b);
+  boats.push(b);
+ }
+}
 
-  for(let i=0;i<4;i++){
-    document.getElementById("btn"+i).innerText = q.a[i];
-  }
+function showQ(){
+ let q=questions[index];
+ document.getElementById("question").innerText=q.q;
+ for(let i=0;i<4;i++){
+  document.getElementById("btn"+i).innerText=q.a[i];
+ }
+ document.getElementById("explain").innerText="";
+}
 
-  window.correct = q.correct;
-  document.getElementById("explain").innerText = "";
+function choose(i){
+ let q=questions[index];
+ resetTimer();
+
+ if(i===q.c){
+  soundCorrect.play();      // ✅ đúng
+  soundSplash.play();      // 🌊 chìm
+
+  document.getElementById("stake").style.display="block";
+  boats[0].classList.add("sink");
+  boats.shift();
+  document.getElementById("explain").innerText="ĐÚNG! "+q.e;
+
+  setTimeout(nextQ,2000);
+ }else{
+  soundWrong.play();       // ❌ sai
+  document.getElementById("explain").innerText="SAI! "+q.e;
+ }
+}
+
+function nextQ(){
+ document.getElementById("stake").style.display="none";
+ index++;
+ if(index>=questions.length){
+  win();
+ }else{
+  spawnBoats();
+  showQ();
+ }
 }
 
 function startTimer(){
-  time = 30;
-  document.getElementById("time").innerText = time;
-
-  clearInterval(timer);
-  timer = setInterval(()=>{
-    time--;
-    document.getElementById("time").innerText = time;
-    if(time <= 0){
-      clearInterval(timer);
-      loseGame();
-    }
-  },1000);
+ time=30;
+ document.getElementById("time").innerText=time;
+ timer=setInterval(()=>{
+  time--;
+  document.getElementById("time").innerText=time;
+  if(time<=0){
+   lose();
+  }
+ },1000);
 }
 
 function resetTimer(){
-  clearInterval(timer);
-  startTimer();
+ clearInterval(timer);
+ startTimer();
 }
 
-function choose(ans){
-  resetTimer();
-  let q = questions[current];
-
-  if(ans === window.correct){
-    soundCorrect.play();
-    showStake();
-    sinkBoat();
-    document.getElementById("explain").innerText = "✅ Đúng! " + q.explain;
-    boatCount--;
-    updateBoats();
-  }else{
-    soundWrong.play();
-    document.getElementById("explain").innerText = "❌ Sai! " + q.explain;
-    moveBoatsForward();
-  }
-
-  setTimeout(()=>{
-    current++;
-
-    if(boatCount <= 0){
-      winGame();
-      return;
-    }
-
-    if(current >= questions.length){
-      current = 0;
-    }
-
-    loadQuestion();
-  },3000);
+function win(){
+ clearInterval(timer);
+ soundWin.play();   // 🎉 thắng
+ document.getElementById("gameScreen").style.display="none";
+ document.getElementById("winScreen").style.display="block";
 }
 
-function createBoats(){
-  const area = document.getElementById("boatArea");
-  area.innerHTML = "";
-  for(let i=0;i<5;i++){
-    let img = document.createElement("img");
-    img.src = "boat.png";
-    img.className = "boat";
-    img.style.left = (i*120+100)+"px";
-    img.style.top = "200px";
-    area.appendChild(img);
-  }
-}
-
-function updateBoats(){
-  const boats = document.querySelectorAll(".boat");
-  if(boats.length>0){
-    boats[0].remove();
-  }
-}
-
-function sinkBoat(){
-  const boats = document.querySelectorAll(".boat");
-  if(boats.length>0){
-    boats[0].classList.add("sink");
-    soundSplash.play();
-  }
-}
-
-function moveBoatsForward(){
-  const boats = document.querySelectorAll(".boat");
-  boats.forEach(b=>{
-    b.style.top = (b.offsetTop + 20) + "px";
-  });
-}
-
-function showStake(){
-  const stake = document.getElementById("stake");
-  stake.style.display = "block";
-  setTimeout(()=>{
-    stake.style.display = "none";
-  },1500);
-}
-
-function winGame(){
-  document.getElementById("gameScreen").style.display = "none";
-  document.getElementById("winScreen").style.display = "block";
-}
-
-function loseGame(){
-  document.getElementById("gameScreen").style.display = "none";
-  document.getElementById("loseScreen").style.display = "block";
+function lose(){
+ clearInterval(timer);
+ soundLose.play();  // 💀 thua
+ document.getElementById("gameScreen").style.display="none";
+ document.getElementById("loseScreen").style.display="block";
 }
 
 function restart(){
-  location.reload();
+ location.reload();
 }
