@@ -6,6 +6,7 @@ body{
 
 /* MÀN HÌNH CHUNG */
 .screen{
+  display:none;              /* 🔴 QUAN TRỌNG */
   width:100vw;
   height:100vh;
   background:url("bg.png") no-repeat center center/cover;
@@ -13,7 +14,7 @@ body{
 
 /* START */
 .start{
-  display:flex;
+  display:flex;              /* chỉ start mới hiện */
   flex-direction:column;
   justify-content:center;
   align-items:center;
@@ -46,22 +47,26 @@ body{
   overflow:hidden;
 }
 
+/* nền sông */
 #bg{
+  position:absolute;        /* 🔴 QUAN TRỌNG */
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
+/* vùng thuyền */
 #boatArea{
   position:absolute;
   width:100%;
   height:100%;
 }
 
+/* thuyền */
 .boat{
   position:absolute;
   width:80px;
-  bottom:120px; /* GIỮ THUYỀN TRÊN MẶT NƯỚC */
+  bottom:120px;
   animation: float 2s ease-in-out infinite;
 }
 
@@ -80,6 +85,7 @@ body{
   100%{ opacity:0; transform:translateY(120px); }
 }
 
+/* cọc gỗ */
 #stake{
   position:absolute;
   width:80px;
@@ -97,8 +103,11 @@ body{
 
 #question{
   margin-top:20px;
+  color:white;
+  text-shadow:1px 1px 3px black;
 }
 
 #explain{
   font-weight:bold;
+  color:yellow;
 }
