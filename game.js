@@ -24,7 +24,6 @@ let questions = [
   c:0, e:"Quân Nam Hán đi bằng thuyền."}
 ];
 
-// ===== ÂM THANH =====
 const soundCorrect = Âm thanh mới ("correct.wav"); 
 const soundWrong = Âm thanh mới ("wrong.wav"); 
 const soundSplash = Âm thanh mới ("splash.wav"); 
@@ -32,7 +31,7 @@ const soundWin = Âm thanh mới ("win.wav");
 const soundLose = Âm thanh mới ("lose.wav"); 
 
 const START_TIME = 30;
-const WRONG_PENALTY = 5;
+const BOAT_STEP = 110;
 
 cho chỉ số = 0; 
 let boats = [];
@@ -40,6 +39,8 @@ cho phép thời gian = START_TIME;
 hẹn giờ dễ dàng = không; 
 let locked = false;
 let gameQuestions = [];
+để kẻ địchOffset = 0; 
+để finishX = 0; 
 
 chức năng playÂm thanh (âm thanh) { 
  sound.currentTime = 0;
@@ -55,11 +56,22 @@ chức năng xáo trộn(danh sách){
  trả lại bản sao; 
 }
 
+chức năng bindButtons(){ 
+ const startBtn = document.getElementById("startBtn");
+ const playAgainWin = document.getElementById("playAgainWin");
+ const playAgainLose = document.getElementById("playAgainLose");
+
+ if(startBtn) startBtn.addEventListener("click", startGame);
+ if(playAgainWin) playAgainWin.addEventListener("click", khởi động lại); 
+ if(playAgainLose) playAgainLose.addEventListener("click", khởi động lại); 
+}
+
 chức năng startGame(){ 
  clearInterval (hẹn giờ); 
  chỉ số = 0; 
  khóa = sai; 
  thời gian = START_TIME; 
+ enemyOffset = 0;
  gameQuestions = xáo trộn (câu hỏi); 
 
  document.getElementById("startScreen").style.display="none";
@@ -76,14 +88,20 @@ chức năng startGame(){
 
 chức năng spawnBoats(totalBoats){ 
  let area = document.getElementById("boatArea");
+ để gameArea = document.getElementById("gameArea"); 
  area.innerHTML = "";
  thuyền = []; 
- khoảng cách const = Math.max(90, Math.floor((window.innerWidth - 200) / totalBoats)); 
+
+ khoảng cách const = 110; 
+ finishX = gameArea.clientWidth - 80;
+
  for(let i=0; i<totalBoats; i++){ 
   let b = document.createElement("img");
+ để baseX = 80 + i * khoảng cách; 
   b.src = "boat.png";
  b.className = "thuyền"; 
- b.style.left = (80 + i * khoảng cách) + "px"; 
+ b.dataset.baseX = Chuỗi (baseX); 
+  b.style.left = baseX + "px";
   area.appendChild(b);
  thuyền.push(b); 
  }
@@ -116,6 +134,23 @@ chức năng startTimer (giây) {
  hẹn giờ = setInterval (tickTimer, 1000); 
 }
 
+chức năng enemyAdvance(){
+enemyOffset += BOAT_STEP;
+let reachFinish = false;
+
+for(cho i=0; i<boats.chiều dài; i++){
+const boat = thuyền[i];
+const baseX = Số (boat.dataset.baseX);
+const nextX = baseX + enemyOffset;
+boat.style.left = nextX + "px";
+if(nextX + 100 >= finishX){
+reachFinish = đúng;
+  }
+ }
+
+trở lại phạm vi tiếp cậnKết thúc;
+}
+
 hàm chọn (i){ 
  nếu (bị khóa) trở lại; 
  khóa = đúng; 
@@ -131,28 +166,26 @@ hàm chọn (i){
 
   if(boats.length > 0){
  thuyền[0].classList.add("chìm"); 
-    boats.shift(); // thuyền chết vĩnh viễn
+thuyền.shift();
   }
 
  document.getElementById("explain").innerText = " ✅ ĐÚNG! " + q.e; 
-
  setTimeout (nextQ, 2000); 
 
  }khác{ 
   playSound(soundWrong);
- thời gian = Math.max (0, thời gian - WRONG_PENALTY); 
- document.getElementById("time").innerText = thời gian; 
- document.getElementById("explain").innerText = " ❌ SAI! " + q.e + ' (-${WRONG_PENALTY}s)'; 
+const đạt = enemyAdvance();
+  document.getElementById("explain").innerText = "❌ SAI! Thuyền địch tiến lên!";
 
- if(thời gian <= 0){ 
+if(đạt được){
  setTimeout (thua, 700); 
  trở về; 
   }
 
   setTimeout(()=>{
  khóa = sai; 
-    startTimer();
-  },1200);
+ startTimer (thời gian); 
+  },1000);
  }
 }
 
@@ -185,3 +218,5 @@ hàm lose(){
 chức năng khởi động lại (){ 
  startGame();
 }
+
+window.addEventListener("DOMContentLoaded", bindButtons);
