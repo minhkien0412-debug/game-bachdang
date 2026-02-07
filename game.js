@@ -35,12 +35,12 @@ let index = 0;
 let boats = [];
 let time = 30;
 let timer = null;
-let locked = false; // khóa khi đã chọn đáp án
+let locked = false;
 
 function startGame(){
  document.getElementById("startScreen").style.display="none";
  document.getElementById("gameScreen").style.display="block";
- spawnBoats();
+ spawnBoats();       // CHỈ tạo thuyền 1 lần
  showQ();
  startTimer();
 }
@@ -53,7 +53,7 @@ function spawnBoats(){
   let b = document.createElement("img");
   b.src = "boat.png";
   b.className = "boat";
-  b.style.left = (100 + i*140) + "px";
+  b.style.left = (150 + i*140) + "px";
   area.appendChild(b);
   boats.push(b);
  }
@@ -70,7 +70,7 @@ function showQ(){
 }
 
 function choose(i){
- if(locked) return; // không cho bấm nhiều lần
+ if(locked) return;
  locked = true;
 
  let q = questions[index];
@@ -84,7 +84,7 @@ function choose(i){
 
   if(boats.length > 0){
     boats[0].classList.add("sink");
-    boats.shift();
+    boats.shift(); // thuyền chết vĩnh viễn
   }
 
   document.getElementById("explain").innerText = "✅ ĐÚNG! " + q.e;
@@ -96,7 +96,7 @@ function choose(i){
   document.getElementById("explain").innerText = "❌ SAI! " + q.e;
 
   setTimeout(()=>{
-    startTimer(); // trả lời sai vẫn chơi tiếp
+    startTimer();
     locked = false;
   },1500);
  }
