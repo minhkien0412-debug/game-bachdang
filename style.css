@@ -1,45 +1,64 @@
 cơ thể{
  lề: 0; 
- font-family:Arial; 
+ font-family:Arial, sans-serif; 
  text-align:trung tâm; 
  bối cảnh:#0b2b4b; 
 }
 
-/* MÀN HÌNH CHUNG */
 .màn hình{
  hiển thị: không có; 
  Chiều rộng: 100VW; 
- Chiều cao: 100VH; 
+ Chiều cao tối thiểu: 100VH; 
  nền:linear-gradient(rgba(5, 20, 40, 0,55), rgba(5, 20, 40, 0,55)), 
  url ("bg.png") trung tâm / nắp trung tâm không lặp lại; 
 }
 
-/* BẮT ĐẦU */
-.bắt đầu{
+.start,
+#winScreen,
+#loseScreen{
  hiển thị: linh hoạt; 
  hướng linh hoạt: cột; 
  justify-content:trung tâm; 
  align-items: trung tâm; 
+ khoảng cách: 12px; 
 }
 
 .tiêu đề{
- kích thước phông chữ: 60px; 
+ kích thước phông chữ: 56px; 
  màu sắc: trắng; 
  text-shadow: 2px 2px 5px đen; 
- lề-đáy: 30px; 
+ lề-đáy: 10px; 
+}
+
+.phụ đề, 
+.resultVăn bản{
+ Màu sắc: #f7f7f7; 
+ text-shadow: 1px 1px 2px đen; 
+ lề: 0; 
 }
 
 .bigBtn{
- kích thước phông chữ: 28px; 
- đệm: 15px 40px; 
+ kích thước phông chữ: 24px; 
+ đệm: 12px 28px; 
+ biên giới: không có; 
+ bán kính đường viền: 10px; 
  con trỏ:p ointer; 
+ bối cảnh:#ffde7a; 
 }
 
-/* TRÒ CHƠI */
-#timeBox{
+.hud{
+ hiển thị: linh hoạt; 
+ justify-content:trung tâm; 
+ khoảng cách: 20px; 
+ flex-wrap: bọc; 
+ đệm-top: 10px; 
+}
+
+#timeBox,
+#scoreBox,
+#progressBox{
  kích thước phông chữ: 20px; 
  màu sắc: trắng; 
- lề: 10px; 
  text-shadow: 1px 1px 3px đen; 
 }
 
@@ -75,14 +94,12 @@ cơ thể{
  text-shadow: 1px 1px 2px đen; 
 }
 
-/* vùng thuyền */
 #boatArea{
  vị trí: tuyệt đối; 
  chiều rộng: 100%; 
  chiều cao: 100%; 
 }
 
-/* thuyền */
 .thuyền{
  vị trí: tuyệt đối; 
  chiều rộng: 100px; 
@@ -106,7 +123,6 @@ cơ thể{
  100%{ độ mờ: 0; transform: translateY (120px) xoay (20deg); } 
 }
 
-/* cọc gỗ */
 #stake{
  vị trí: tuyệt đối; 
  chiều rộng: 80px; 
@@ -116,34 +132,43 @@ cơ thể{
  biến đổi: xoay (-45deg); 
 }
 
-Nút #answers{
- lề: 10px; 
- đệm: 10px 20px; 
- kích thước phông chữ: 16px; 
- con trỏ:p ointer; 
-}
-
 #question{
  lề-trên cùng: 20px; 
  màu sắc: trắng; 
  text-shadow: 1px 1px 3px đen; 
+ đệm: 0 16px; 
+}
+
+#answers{
+ hiển thị: linh hoạt; 
+ justify-content:trung tâm; 
+ khoảng cách: 10px; 
+ flex-wrap: bọc; 
+ đệm: 0 10px; 
+}
+
+Nút #answers{
+ lề: 6px; 
+ đệm: 10px 18px; 
+ kích thước phông chữ: 16px; 
+ biên giới: không có; 
+ bán kính đường viền: 8px; 
+ con trỏ:p ointer; 
+}
+
+#answers nút:d có thể { 
+ độ mờ: 0,65; 
+ con trỏ: không được phép; 
+}
+
+.nextBtn{
+ lề-trên cùng: 12px; 
+ kích thước phông chữ: 19px; 
 }
 
 #explain{
  font-weight: in đậm; 
  màu sắc: màu vàng; 
-}
-
-
-#winScreen,
-#loseScreen{
- hướng linh hoạt: cột; 
- justify-content:trung tâm; 
- align-items: trung tâm; 
-}
-
-.nextBtn{
- lề-trên cùng: 10px; 
- kích thước phông chữ: 20px; 
- đệm: 10px 24px; 
+ chiều cao tối thiểu: 28px; 
+ đệm: 0 12px 20px; 
 }
