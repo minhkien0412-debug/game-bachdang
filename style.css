@@ -62,9 +62,6 @@ cơ thể{
  chiều rộng: 4px; 
  bối cảnh:#ffda6b; 
  Bóng-hộp: 0 0 10px rgba< / b19>255.218.107.0,8
- màu sắc: #ffda6b; 
- font-weight: in đậm; 
- text-shadow: 1px 1px 2px đen; 
 }
 
 #finishLine::trước{ 
@@ -73,6 +70,9 @@ cơ thể{
  hàng đầu: 10px; 
  phải: -10px; 
  transform: translateX (100%); 
+ màu sắc: #ffda6b; 
+ font-weight: in đậm; 
+ text-shadow: 1px 1px 2px đen; 
 }
 
 /* vùng thuyền */
@@ -132,4 +132,18 @@ Nút #answers{
 #explain{
  font-weight: in đậm; 
  màu sắc: màu vàng; 
+}
+
+
+#winScreen,
+#loseScreen{
+ hướng linh hoạt: cột; 
+ justify-content:trung tâm; 
+ align-items: trung tâm; 
+}
+
+.nextBtn{
+ lề-trên cùng: 10px; 
+ kích thước phông chữ: 20px; 
+ đệm: 10px 24px; 
 }
