@@ -19,102 +19,147 @@ let questions = [
   c:0, e:"Quân Nam Hán đi bằng thuyền."}
 ];
 
-const soundCorrect = Âm thanh mới ("correct.wav"); 
-const soundWrong = Âm thanh mới ("wrong.wav"); 
-const soundSplash = Âm thanh mới ("splash.wav"); 
-const soundWin = Âm thanh mới ("win.wav"); 
-const soundLose = Âm thanh mới ("lose.wav"); 
+const soundCorrect = new Audio("correct.wav");
+const soundWrong = new Audio("wrong.wav");
+const soundSplash = new Audio("splash.wav");
+const soundWin = new Audio("win.wav");
+const soundLose = new Audio("lose.wav");
 
 const START_TIME = 30;
 const BOAT_STEP = 110;
+const SCORE_PER_CORRECT = 100;
 
-cho chỉ số = 0; 
+let index = 0;
 let boats = [];
-cho phép thời gian = START_TIME; 
-hẹn giờ dễ dàng = không; 
+let time = START_TIME;
+let timer = null;
 let locked = false;
 let canGoNext = false;
+let isGameOver = false;
+let score = 0;
 let gameQuestions = [];
-để kẻ địchOffset = 0; 
-để finishX = 0; 
+let enemyOffset = 0;
+let finishX = 0;
 
-chức năng playÂm thanh (âm thanh) { 
+function playSound(sound){
  sound.currentTime = 0;
  sound.play();
 }
 
-chức năng xáo trộn(danh sách){ 
- let copy = [... danh sách]; 
+function shuffle(list){
+ let copy = [...list];
  for(let i = copy.length - 1; i > 0; i--){
   const j = Math.floor(Math.random() * (i + 1));
- [sao chép [i], sao chép [j]] = [sao chép [j], sao chép [i]]; 
+  [copy[i], copy[j]] = [copy[j], copy[i]];
  }
- trả lại bản sao; 
+ return copy;
 }
 
-chức năng bindButtons(){ 
- document.getElementById("startBtn").addEventListener("nhấp chuột", startGame); 
- document.getElementById("playAgainWin").addEventListener("click", khởi động lại); 
- document.getElementById("playAgainLose").addEventListener("click", khởi động lại); 
+function prepareQuestions(){
+ return shuffle(questions).map((q)=>{
+  const options = q.a.map((text, idx)=>({ text, idx }));
+  const shuffledOptions = shuffle(options);
+  return {
+   q: q.q,
+   a: shuffledOptions.map((item)=>item.text),
+   c: shuffledOptions.findIndex((item)=>item.idx === q.c),
+   e: q.e
+  };
+ });
+}
+
+function bindButtons(){
+ document.getElementById("startBtn").addEventListener("click", startGame);
+ document.getElementById("playAgainWin").addEventListener("click", restart);
+ document.getElementById("playAgainLose").addEventListener("click", restart);
  document.getElementById("nextBtn").addEventListener("click", goNextQuestion);
 
  document.querySelectorAll(".answerBtn").forEach((btn)=>{
   btn.addEventListener("click", ()=> choose(Number(btn.dataset.answer)));
  });
+
+ window.addEventListener("resize", updateFinishLine);
+ document.addEventListener("keydown", (event)=>{
+  if(event.key === "Enter" && canGoNext){
+   goNextQuestion();
+  }
+ });
 }
 
-bộ chức năngNextButton(hiển thị){ 
+function setNextButton(show){
  const nextBtn = document.getElementById("nextBtn");
- nextBtn.style.display = hiển thị ? "inline-block": "không có"; 
- canGoNext = hiển thị; 
+ nextBtn.style.display = show ? "inline-block" : "none";
+ nextBtn.innerText = index === gameQuestions.length - 1 ? "Xem kết quả ➜" : "Câu tiếp theo ➜";
+ canGoNext = show;
 }
 
-chức năng startGame(){ 
- clearInterval (hẹn giờ); 
- chỉ số = 0; 
- khóa = sai; 
- canGoNext = sai; 
- thời gian = START_TIME; 
+function setAnswersDisabled(disabled){
+ document.querySelectorAll(".answerBtn").forEach((btn)=>{
+  btn.disabled = disabled;
+ });
+}
+
+function updateHud(){
+ document.getElementById("score").innerText = score;
+ document.getElementById("currentQuestion").innerText = Math.min(index + 1, gameQuestions.length);
+ document.getElementById("totalQuestion").innerText = gameQuestions.length;
+}
+
+function startGame(){
+ clearInterval(timer);
+ index = 0;
+ locked = false;
+ canGoNext = false;
+ isGameOver = false;
+ score = 0;
+ time = START_TIME;
  enemyOffset = 0;
- gameQuestions = xáo trộn (câu hỏi); 
+ gameQuestions = prepareQuestions();
 
  document.getElementById("startScreen").style.display = "none";
  document.getElementById("winScreen").style.display = "none";
  document.getElementById("loseScreen").style.display = "none";
- document.getElementById("gameScreen").style.display = "khối"; 
+ document.getElementById("gameScreen").style.display = "block";
  document.getElementById("stake").style.display = "none";
  document.getElementById("explain").innerText = "";
 
  spawnBoats(gameQuestions.length);
+ updateHud();
  showQ();
- startTimer (START_TIME); 
+ startTimer(START_TIME);
 }
 
-chức năng spawnBoats(totalBoats){ 
+function updateFinishLine(){
+ const finishLine = document.getElementById("finishLine");
+ finishX = finishLine.offsetLeft;
+}
+
+function spawnBoats(totalBoats){
  const area = document.getElementById("boatArea");
- const gameArea = document.getElementById("gameArea");
  area.innerHTML = "";
- thuyền = []; 
+ boats = [];
+ updateFinishLine();
 
- khoảng cách const = 110; 
- finishX = gameArea.clientWidth - 80;
-
+ const spacing = 110;
  for(let i = 0; i < totalBoats; i++){
   let b = document.createElement("img");
- để baseX = 80 + i * khoảng cách; 
+  let baseX = 80 + i * spacing;
   b.src = "boat.png";
- b.className = "thuyền"; 
- b.dataset.baseX = Chuỗi (baseX); 
+  b.className = "boat";
+  b.dataset.baseX = String(baseX);
   b.style.left = baseX + "px";
   area.appendChild(b);
- thuyền.push(b); 
+  boats.push(b);
  }
 }
 
-hàm showQ(){ 
- khóa = sai; 
- setNextButton(sai); 
- let q = gameQuestions[index];
+function showQ(){
+ locked = false;
+ setAnswersDisabled(false);
+ setNextButton(false);
+ updateHud();
+
+ const q = gameQuestions[index];
  document.getElementById("question").innerText = q.q;
  for(let i = 0; i < 4; i++){
   document.getElementById("btn" + i).innerText = q.a[i];
@@ -122,106 +167,123 @@ hàm showQ(){
  document.getElementById("explain").innerText = "";
 }
 
-chức năng tickTimer(){ 
- thời gian--; 
- document.getElementById("time").innerText = thời gian; 
- if(thời gian <= 0){ 
- thua(); 
+function tickTimer(){
+ time--;
+ document.getElementById("time").innerText = time;
+ if(time <= 0){
+  lose();
  }
 }
 
-chức năng startTimer (giây) { 
- clearInterval (hẹn giờ); 
- if(typeof seconds === "số"){ 
- thời gian = giây; 
+function startTimer(seconds){
+ clearInterval(timer);
+ if(typeof seconds === "number"){
+  time = seconds;
  }
- document.getElementById("time").innerText = thời gian; 
- hẹn giờ = setInterval (tickTimer, 1000); 
+ document.getElementById("time").innerText = time;
+ timer = setInterval(tickTimer, 1000);
 }
 
-chức năng enemyAdvance(){
-enemyOffset += BOAT_STEP;
-let reachFinish = false;
+function enemyAdvance(){
+ enemyOffset += BOAT_STEP;
+ let reachFinish = false;
 
-for(let i = 0; i < boats.length; i++){
-const boat = thuyền[i];
-const baseX = Số (boat.dataset.baseX);
-const nextX = baseX + enemyOffset;
-boat.style.left = nextX + "px";
-if(nextX + 100 >= finishX){
-reachFinish = đúng;
+ for(let i = 0; i < boats.length; i++){
+  const boat = boats[i];
+  const baseX = Number(boat.dataset.baseX);
+  const nextX = baseX + enemyOffset;
+  boat.style.left = nextX + "px";
+  if(nextX + 100 >= finishX){
+   reachFinish = true;
   }
  }
 
-trở lại phạm vi tiếp cậnKết thúc;
+ return reachFinish;
 }
 
-hàm chọn (i){ 
- nếu (bị khóa) trở lại; 
- khóa = đúng; 
+function choose(i){
+ if(locked || isGameOver) return;
+ locked = true;
+ setAnswersDisabled(true);
+ clearInterval(timer);
 
- let q = gameQuestions[index];
- clearInterval (hẹn giờ); 
-
+ const q = gameQuestions[index];
  if(i === q.c){
   playSound(soundCorrect);
- playSound (soundSplash); 
- document.getElementById("stake").style.display = "khối"; 
+  playSound(soundSplash);
+  score += SCORE_PER_CORRECT;
+  document.getElementById("stake").style.display = "block";
 
   if(boats.length > 0){
- thuyền[0].classList.add("chìm"); 
-thuyền.shift();
+   boats[0].classList.add("sink");
+   boats.shift();
   }
 
- document.getElementById("explain").innerText = " ✅ ĐÚNG! " + q.e; 
+  document.getElementById("explain").innerText = "✅ ĐÚNG! " + q.e;
   setNextButton(true);
- trở về; 
+  updateHud();
+  return;
  }
 
  playSound(soundWrong);
-const đạt = enemyAdvance();
+ const reached = enemyAdvance();
  document.getElementById("explain").innerText = "❌ SAI! Thuyền địch tiến lên!";
 
-if(đạt được){
- setTimeout (thua, 700); 
- trở về; 
+ if(reached){
+  setTimeout(lose, 700);
+  return;
  }
 
  setNextButton(true);
 }
 
-hàm goNextQuestion(){ 
- if(!canGoNext) trả về; 
+function goNextQuestion(){
+ if(!canGoNext || isGameOver) return;
  nextQ();
 }
 
-hàm nextQ(){ 
+function nextQ(){
  document.getElementById("stake").style.display = "none";
- chỉ mục ++; 
+ index++;
 
- if(index >= gameQuestions.length || boats.length === 0){
- thắng(); 
- }khác{ 
+ if(index >= gameQuestions.length){
+  if(boats.length === 0){
+   win();
+  }else{
+   lose();
+  }
+  return;
+ }
+
+ if(boats.length === 0){
+  win();
+ }else{
   showQ();
- startTimer (START_TIME); 
+  startTimer(START_TIME);
  }
 }
 
-hàm win(){ 
- clearInterval (hẹn giờ); 
- playSound (soundWin); 
+function win(){
+ if(isGameOver) return;
+ isGameOver = true;
+ clearInterval(timer);
+ playSound(soundWin);
+ document.getElementById("winScore").innerText = score;
  document.getElementById("gameScreen").style.display = "none";
  document.getElementById("winScreen").style.display = "flex";
 }
 
-hàm lose(){ 
- clearInterval (hẹn giờ); 
+function lose(){
+ if(isGameOver) return;
+ isGameOver = true;
+ clearInterval(timer);
  playSound(soundLose);
+ document.getElementById("loseScore").innerText = score;
  document.getElementById("gameScreen").style.display = "none";
  document.getElementById("loseScreen").style.display = "flex";
 }
 
-chức năng khởi động lại (){ 
+function restart(){
  startGame();
 }
 
