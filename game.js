@@ -183,4 +183,5 @@ hàm lose(){
 }
 
 chức năng khởi động lại (){ 
- sta
+ startGame();
+}
