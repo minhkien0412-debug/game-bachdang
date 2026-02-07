@@ -6,7 +6,7 @@ body{
 
 /* MÀN HÌNH CHUNG */
 .screen{
-  display:none;              /* 🔴 QUAN TRỌNG */
+  display:none;
   width:100vw;
   height:100vh;
   background:url("bg.png") no-repeat center center/cover;
@@ -14,7 +14,7 @@ body{
 
 /* START */
 .start{
-  display:flex;              /* chỉ start mới hiện */
+  display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
@@ -49,7 +49,7 @@ body{
 
 /* nền sông */
 #bg{
-  position:absolute;        /* 🔴 QUAN TRỌNG */
+  position:absolute;
   width:100%;
   height:100%;
   object-fit:cover;
@@ -65,8 +65,8 @@ body{
 /* thuyền */
 .boat{
   position:absolute;
-  width:80px;
-  bottom:120px;
+  width:100px;
+  bottom:120px; /* nổi trên mặt nước */
   animation: float 2s ease-in-out infinite;
 }
 
@@ -81,8 +81,8 @@ body{
 }
 
 @keyframes sink{
-  0%{ opacity:1; transform:translateY(0); }
-  100%{ opacity:0; transform:translateY(120px); }
+  0%{ opacity:1; transform:translateY(0) rotate(0deg); }
+  100%{ opacity:0; transform:translateY(120px) rotate(20deg); }
 }
 
 /* cọc gỗ */
