@@ -10,7 +10,7 @@
 <!-- MÀN HÌNH BẮT ĐẦU -->
 <div id="startScreen" class="screen start"> 
   <h1 class="title">TRẬN BẠCH ĐẰNG</h1>
- <button class="bigBtn" onclick="startGame()">START</button> 
+ <button id="startBtn" class="bigBtn">START</button> 
 </div>
 
 <!-- MÀN HÌNH TRÒ CHƠI -->
@@ -19,6 +19,7 @@
 
  <div id="gameArea"> 
  <div id="boatArea"></div> 
+ <div id="finishLine">ĐÍCH</div> 
  <img src="stake.png" id="cổ phần"> 
   </div>
 
@@ -37,13 +38,13 @@
 <!-- THẮNG -->
 <div id="winScreen" class="screen"> 
  <h1> 🎉 BẠN THẮNG!< / h1> 
-  <button class="bigBtn" onclick="restart()">Chơi lại</button>
+  <button id="playAgainWin" class="bigBtn">Chơi lại</button>
 </div>
 
 <!-- THUA -->
 <div id="loseScreen" class="screen"> 
  <h1> 💀 BẠN THUA!< / h1> 
-  <button class="bigBtn" onclick="restart()">Chơi lại</button>
+  <button id="playAgainLose" class="bigBtn">Chơi lại</button>
 </div>
 
 <script src="game.js"></script> 
