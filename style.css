@@ -32,6 +32,7 @@ cơ thể{
 .bigBtn{
  kích thước phông chữ: 28px; 
  đệm: 15px 40px; 
+ con trỏ:p ointer; 
 }
 
 /* TRÒ CHƠI */
@@ -53,6 +54,27 @@ cơ thể{
  url ("bg.png") trung tâm / nắp trung tâm không lặp lại; 
 }
 
+#finishLine{
+ vị trí: tuyệt đối; 
+ hàng đầu: 0; 
+ dưới cùng: 0; 
+ phải: 36px; 
+ chiều rộng: 4px; 
+ bối cảnh:#ffda6b; 
+ Bóng-hộp: 0 0 10px rgba< / b19>255.218.107.0,8
+ màu sắc: #ffda6b; 
+ font-weight: in đậm; 
+ text-shadow: 1px 1px 2px đen; 
+}
+
+#finishLine::trước{ 
+ nội dung:"ĐÍCH"; 
+ vị trí: tuyệt đối; 
+ hàng đầu: 10px; 
+ phải: -10px; 
+ transform: translateX (100%); 
+}
+
 /* vùng thuyền */
 #boatArea{
  vị trí: tuyệt đối; 
@@ -64,8 +86,9 @@ cơ thể{
 .thuyền{
  vị trí: tuyệt đối; 
  chiều rộng: 100px; 
-  bottom:120px; /* nổi trên mặt nước */
+ dưới cùng: 120px; 
  hoạt hình: float 2s ease-in-out infinite; 
+ Chuyển đổi: Trái 0,45 giây dễ dàng; 
 }
 
 @keyframes float{
@@ -97,6 +120,7 @@ Nút #answers{
  lề: 10px; 
  đệm: 10px 20px; 
  kích thước phông chữ: 16px; 
+ con trỏ:p ointer; 
 }
 
 #question{
