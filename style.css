@@ -1,114 +1,111 @@
-body{
-  margin:0;
-  font-family:Arial;
-  text-align:center;
+cơ thể{
+ lề: 0; 
+ font-family:Arial; 
+ text-align:trung tâm; 
+ bối cảnh:#0b2b4b; 
 }
 
 /* MÀN HÌNH CHUNG */
-.screen{
-  display:none;
-  width:100vw;
-  height:100vh;
+.màn hình{
+ hiển thị: không có; 
+ Chiều rộng: 100VW; 
+ Chiều cao: 100VH; 
+ nền:linear-gradient(rgba(5, 20, 40, 0,55), rgba(5, 20, 40, 0,55)), 
+ url ("bg.png") trung tâm / nắp trung tâm không lặp lại; 
 }
 
-/* START */
-.start{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  background:url("bg.png") no-repeat center center/cover;
+/* BẮT ĐẦU */
+.bắt đầu{
+ hiển thị: linh hoạt; 
+ hướng linh hoạt: cột; 
+ justify-content:trung tâm; 
+ align-items: trung tâm; 
 }
 
-.title{
-  font-size:60px;
-  color:white;
-  text-shadow:2px 2px 5px black;
-  margin-bottom:30px;
+.tiêu đề{
+ kích thước phông chữ: 60px; 
+ màu sắc: trắng; 
+ text-shadow: 2px 2px 5px đen; 
+ lề-đáy: 30px; 
 }
 
 .bigBtn{
-  font-size:28px;
-  padding:15px 40px;
+ kích thước phông chữ: 28px; 
+ đệm: 15px 40px; 
 }
 
-/* GAME */
-#gameScreen{
-  background:url("bg.png") no-repeat center center/cover;
-}
-
+/* TRÒ CHƠI */
 #timeBox{
-  font-size:20px;
-  color:white;
-  margin:10px;
-  text-shadow:1px 1px 3px black;
+ kích thước phông chữ: 20px; 
+ màu sắc: trắng; 
+ lề: 10px; 
+ text-shadow: 1px 1px 3px đen; 
 }
 
 #gameArea{
-  position:relative;
-  width:100%;
-  height:50vh;
-  overflow:hidden;
-}
-
-/* KHÔNG cần img nền nữa */
-#bg{
-  display:none;
+ vị trí: tương đối; 
+ chiều rộng: 100%; 
+ Chiều cao: 50VH; 
+ tràn: ẩn; 
+ border-top: 3px rgba rắn (255.255.255.0,35); 
+ đường viền-đáy: 3px rgba rắn (255.255.255.0.2); 
+ nền:linear-gradient(rgba(17, 70, 114, 0,15), rgba(6, 27, 52, 0,5)), 
+ url ("bg.png") trung tâm / nắp trung tâm không lặp lại; 
 }
 
 /* vùng thuyền */
 #boatArea{
-  position:absolute;
-  width:100%;
-  height:100%;
+ vị trí: tuyệt đối; 
+ chiều rộng: 100%; 
+ chiều cao: 100%; 
 }
 
 /* thuyền */
-.boat{
-  position:absolute;
-  width:100px;
+.thuyền{
+ vị trí: tuyệt đối; 
+ chiều rộng: 100px; 
   bottom:120px; /* nổi trên mặt nước */
-  animation: float 2s ease-in-out infinite;
+ hoạt hình: float 2s ease-in-out infinite; 
 }
 
 @keyframes float{
-  0%{ transform:translateY(0); }
-  50%{ transform:translateY(5px); }
-  100%{ transform:translateY(0); }
+ 0%{ transform:translateY(0); } 
+ 50%{ transform:translateY(5px); } 
+ 100%{ transform:translateY(0); } 
 }
 
-.sink{
-  animation: sink 2s forwards;
+.bồn rửa{
+ hoạt hình: chìm 2 giây về phía trước; 
 }
 
-@keyframes sink{
-  0%{ opacity:1; transform:translateY(0) rotate(0deg); }
-  100%{ opacity:0; transform:translateY(120px) rotate(20deg); }
+@keyframes bồn rửa{ 
+ 0%{ độ mờ: 1; transform: translateY (0) xoay (0deg); } 
+ 100%{ độ mờ: 0; transform: translateY (120px) xoay (20deg); } 
 }
 
 /* cọc gỗ */
 #stake{
-  position:absolute;
-  width:80px;
-  left:45%;
-  bottom:100px;
-  display:none;
-  transform:rotate(-45deg);
+ vị trí: tuyệt đối; 
+ chiều rộng: 80px; 
+ trái: 45%; 
+ dưới cùng: 100px; 
+ hiển thị: không có; 
+ biến đổi: xoay (-45deg); 
 }
 
-#answers button{
-  margin:10px;
-  padding:10px 20px;
-  font-size:16px;
+Nút #answers{
+ lề: 10px; 
+ đệm: 10px 20px; 
+ kích thước phông chữ: 16px; 
 }
 
 #question{
-  margin-top:20px;
-  color:white;
-  text-shadow:1px 1px 3px black;
+ lề-trên cùng: 20px; 
+ màu sắc: trắng; 
+ text-shadow: 1px 1px 3px đen; 
 }
 
 #explain{
-  font-weight:bold;
-  color:yellow;
+ font-weight: in đậm; 
+ màu sắc: màu vàng; 
 }
