@@ -2,23 +2,18 @@ let questions = [
  {q:"Trận Bạch Đằng năm 938 do ai chỉ huy?",
   a:["Ngô Quyền","Trần Hưng Đạo","Lý Thường Kiệt","Quang Trung"],
   c:0, e:"Ngô Quyền lãnh đạo quân dân đánh bại quân Nam Hán."},
-
  {q:"Chiến thuật chính ở Bạch Đằng là gì?",
   a:["Cọc gỗ ngầm","Đánh bộ","Phòng thủ thành","Cung tên"],
   c:0, e:"Cắm cọc gỗ nhọn dưới sông để phá thuyền giặc."},
-
  {q:"Kẻ thù năm 938 là ai?",
   a:["Nam Hán","Tống","Nguyên","Minh"],
   c:0, e:"Quân Nam Hán xâm lược nước ta."},
-
  {q:"Trận Bạch Đằng diễn ra ở đâu?",
   a:["Sông Bạch Đằng","Sông Hồng","Sông Đà","Sông Cả"],
   c:0, e:"Diễn ra trên sông Bạch Đằng."},
-
  {q:"Ai là con trai Ngô Quyền?",
   a:["Ngô Xương Ngập","Ngô Nhật Khánh","Đinh Bộ Lĩnh","Lê Hoàn"],
   c:0, e:"Ngô Xương Ngập là con Ngô Quyền."},
-
  {q:"Quân giặc đi bằng gì?",
   a:["Thuyền","Ngựa","Xe","Bộ"],
   c:0, e:"Quân Nam Hán đi bằng thuyền."}
@@ -38,6 +33,7 @@ let boats = [];
 cho phép thời gian = START_TIME; 
 hẹn giờ dễ dàng = không; 
 let locked = false;
+let canGoNext = false;
 let gameQuestions = [];
 để kẻ địchOffset = 0; 
 để finishX = 0; 
@@ -49,7 +45,7 @@ chức năng playÂm thanh (âm thanh) {
 
 chức năng xáo trộn(danh sách){ 
  let copy = [... danh sách]; 
- for(let i=copy.length-1; i>0; i--){ 
+ for(let i = copy.length - 1; i > 0; i--){
   const j = Math.floor(Math.random() * (i + 1));
  [sao chép [i], sao chép [j]] = [sao chép [j], sao chép [i]]; 
  }
@@ -57,28 +53,36 @@ chức năng xáo trộn(danh sách){
 }
 
 chức năng bindButtons(){ 
- const startBtn = document.getElementById("startBtn");
- const playAgainWin = document.getElementById("playAgainWin");
- const playAgainLose = document.getElementById("playAgainLose");
+ document.getElementById("startBtn").addEventListener("nhấp chuột", startGame); 
+ document.getElementById("playAgainWin").addEventListener("click", khởi động lại); 
+ document.getElementById("playAgainLose").addEventListener("click", khởi động lại); 
+ document.getElementById("nextBtn").addEventListener("click", goNextQuestion);
 
- if(startBtn) startBtn.addEventListener("click", startGame);
- if(playAgainWin) playAgainWin.addEventListener("click", khởi động lại); 
- if(playAgainLose) playAgainLose.addEventListener("click", khởi động lại); 
+ document.querySelectorAll(".answerBtn").forEach((btn)=>{
+  btn.addEventListener("click", ()=> choose(Number(btn.dataset.answer)));
+ });
+}
+
+bộ chức năngNextButton(hiển thị){ 
+ const nextBtn = document.getElementById("nextBtn");
+ nextBtn.style.display = hiển thị ? "inline-block": "không có"; 
+ canGoNext = hiển thị; 
 }
 
 chức năng startGame(){ 
  clearInterval (hẹn giờ); 
  chỉ số = 0; 
  khóa = sai; 
+ canGoNext = sai; 
  thời gian = START_TIME; 
  enemyOffset = 0;
  gameQuestions = xáo trộn (câu hỏi); 
 
- document.getElementById("startScreen").style.display="none";
- document.getElementById("winScreen").style.display="none";
- document.getElementById("loseScreen").style.display="none";
- document.getElementById("gameScreen").style.display="khối"; 
- document.getElementById("stake").style.display="none";
+ document.getElementById("startScreen").style.display = "none";
+ document.getElementById("winScreen").style.display = "none";
+ document.getElementById("loseScreen").style.display = "none";
+ document.getElementById("gameScreen").style.display = "khối"; 
+ document.getElementById("stake").style.display = "none";
  document.getElementById("explain").innerText = "";
 
  spawnBoats(gameQuestions.length);
@@ -87,15 +91,15 @@ chức năng startGame(){
 }
 
 chức năng spawnBoats(totalBoats){ 
- let area = document.getElementById("boatArea");
- để gameArea = document.getElementById("gameArea"); 
+ const area = document.getElementById("boatArea");
+ const gameArea = document.getElementById("gameArea");
  area.innerHTML = "";
  thuyền = []; 
 
  khoảng cách const = 110; 
  finishX = gameArea.clientWidth - 80;
 
- for(let i=0; i<totalBoats; i++){ 
+ for(let i = 0; i < totalBoats; i++){
   let b = document.createElement("img");
  để baseX = 80 + i * khoảng cách; 
   b.src = "boat.png";
@@ -109,10 +113,11 @@ chức năng spawnBoats(totalBoats){
 
 hàm showQ(){ 
  khóa = sai; 
+ setNextButton(sai); 
  let q = gameQuestions[index];
  document.getElementById("question").innerText = q.q;
- for(let i=0; i<4; i++){ 
-  document.getElementById("btn"+i).innerText = q.a[i];
+ for(let i = 0; i < 4; i++){
+  document.getElementById("btn" + i).innerText = q.a[i];
  }
  document.getElementById("explain").innerText = "";
 }
@@ -138,7 +143,7 @@ chức năng enemyAdvance(){
 enemyOffset += BOAT_STEP;
 let reachFinish = false;
 
-for(cho i=0; i<boats.chiều dài; i++){
+for(let i = 0; i < boats.length; i++){
 const boat = thuyền[i];
 const baseX = Số (boat.dataset.baseX);
 const nextX = baseX + enemyOffset;
@@ -161,8 +166,7 @@ hàm chọn (i){
  if(i === q.c){
   playSound(soundCorrect);
  playSound (soundSplash); 
-
- document.getElementById("stake").style.display="khối"; 
+ document.getElementById("stake").style.display = "khối"; 
 
   if(boats.length > 0){
  thuyền[0].classList.add("chìm"); 
@@ -170,27 +174,29 @@ thuyền.shift();
   }
 
  document.getElementById("explain").innerText = " ✅ ĐÚNG! " + q.e; 
- setTimeout (nextQ, 2000); 
+  setNextButton(true);
+ trở về; 
+ }
 
- }khác{ 
-  playSound(soundWrong);
+ playSound(soundWrong);
 const đạt = enemyAdvance();
-  document.getElementById("explain").innerText = "❌ SAI! Thuyền địch tiến lên!";
+ document.getElementById("explain").innerText = "❌ SAI! Thuyền địch tiến lên!";
 
 if(đạt được){
  setTimeout (thua, 700); 
  trở về; 
-  }
-
-  setTimeout(()=>{
- khóa = sai; 
- startTimer (thời gian); 
-  },1000);
  }
+
+ setNextButton(true);
+}
+
+hàm goNextQuestion(){ 
+ if(!canGoNext) trả về; 
+ nextQ();
 }
 
 hàm nextQ(){ 
- document.getElementById("stake").style.display="none";
+ document.getElementById("stake").style.display = "none";
  chỉ mục ++; 
 
  if(index >= gameQuestions.length || boats.length === 0){
@@ -204,15 +210,15 @@ hàm nextQ(){
 hàm win(){ 
  clearInterval (hẹn giờ); 
  playSound (soundWin); 
- document.getElementById("gameScreen").style.display="none";
- document.getElementById("winScreen").style.display="khối"; 
+ document.getElementById("gameScreen").style.display = "none";
+ document.getElementById("winScreen").style.display = "flex";
 }
 
 hàm lose(){ 
  clearInterval (hẹn giờ); 
  playSound(soundLose);
- document.getElementById("gameScreen").style.display="none";
- document.getElementById("loseScreen").style.display="khối"; 
+ document.getElementById("gameScreen").style.display = "none";
+ document.getElementById("loseScreen").style.display = "flex";
 }
 
 chức năng khởi động lại (){ 
