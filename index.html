@@ -1,50 +1,57 @@
-<! DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="vi">
-<cái đầu>
- <meta charset="UTF-8"> 
- <tên meta="viewport" content="width=device-width, initial-scale=1.0"> 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trận Bạch Đằng</title>
- <link rel="stylesheet" href="style.css"> 
-</cái đầu>
-<cơ thể>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-<div id="startScreen" class="screen start"> 
+<div id="startScreen" class="screen start">
   <h1 class="title">TRẬN BẠCH ĐẰNG</h1>
- <button id="startBtn" class="bigBtn"<b111> type="nút">START</nút> 
+  <p class="subtitle">Trả lời đúng để đánh chìm thuyền giặc trước khi chúng cập đích.</p>
+  <button id="startBtn" class="bigBtn" type="button">BẮT ĐẦU</button>
 </div>
 
-<div id="gameScreen" class="screen" style="display:none;"> 
- <div id="timeBox"> ⏱ <  span id="time">30</span>s</div> 
-
- <div id="gameArea"> 
- <div id="boatArea"></div> 
- <div id="finishLine"></div> 
- <img src="stake.png" id="stake" alt="Cọc gỗ"> 
+<div id="gameScreen" class="screen" style="display:none;">
+  <div class="hud">
+    <div id="timeBox">⏱ <span id="time">30</span>s</div>
+    <div id="scoreBox">🏆 Điểm: <span id="score">0</span></div>
+    <div id="progressBox">📌 Câu <span id="currentQuestion">1</span>/<span id="totalQuestion">6</span></div>
   </div>
 
- <h2 id="câu hỏi"></h2> 
-
- <div id="câu trả lời"> 
- <button id="btn0" class="answerBtn" dữ liệuswer="0" type="nút"></nút> 
- < id nút = "btn1" class = "answerBtn" dữ liệuswer="1" type="button"></button> 
-  Dữ liệu <button id="btn2" class="answerBtn" swer="2" type="button"></button> 
-  Dữ liệu <button id="btn3" class="answerBtn" swer="3" type="nút"></nút> 
+  <div id="gameArea">
+    <div id="boatArea"></div>
+    <div id="finishLine"></div>
+    <img src="stake.png" id="stake" alt="Cọc gỗ">
   </div>
 
- <button id="nextBtn" class="bigBtn nextBtn" type="button" style="display:none;">Câu tiếp theo ➜</button> 
- <p id="giải thích"></p> 
+  <h2 id="question"></h2>
+
+  <div id="answers">
+    <button id="btn0" class="answerBtn" data-answer="0" type="button"></button>
+    <button id="btn1" class="answerBtn" data-answer="1" type="button"></button>
+    <button id="btn2" class="answerBtn" data-answer="2" type="button"></button>
+    <button id="btn3" class="answerBtn" data-answer="3" type="button"></button>
+  </div>
+
+  <button id="nextBtn" class="bigBtn nextBtn" type="button" style="display:none;">Câu tiếp theo ➜</button>
+  <p id="explain"></p>
 </div>
 
-<div id="winScreen" class="screen" style="display:none;"> 
- <h1> 🎉 BẠN THẮNG!< / h1> 
+<div id="winScreen" class="screen" style="display:none;">
+  <h1>🎉 BẠN THẮNG!</h1>
+  <p class="resultText">Điểm cuối: <span id="winScore">0</span></p>
   <button id="playAgainWin" class="bigBtn" type="button">Chơi lại</button>
 </div>
 
-<div id="loseScreen" class="screen" style="display:none;"> 
- <h1> 💀 BẠN THUA!< / h1> 
+<div id="loseScreen" class="screen" style="display:none;">
+  <h1>💀 BẠN THUA!</h1>
+  <p class="resultText">Điểm cuối: <span id="loseScore">0</span></p>
   <button id="playAgainLose" class="bigBtn" type="button">Chơi lại</button>
 </div>
 
-<script src="game.js"></script> 
-</cơ thể>
-</HTML>
+<script src="game.js"></script>
+</body>
+</html>
